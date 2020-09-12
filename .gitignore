@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# An asterisk is a wildcard that matches zero or more characters.
+*.vcxproj
+*.filters
+*.sdf
+*.opendb
+*.suo
+*.sln
+
+# Match directories anywhere in the repository.
+**/Debug
