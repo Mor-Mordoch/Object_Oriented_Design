@@ -1,41 +1,5 @@
 #pragma once
 #include <iostream>
-/*
-Intent
-Adapter is a structural design pattern that lets classes work together (that couldn't otherwise because of incompatible interfaces).
-
-Applicability
-Use the Adapter pattern when:
-• you want to use an existing class, and its interface does not match the one you need.
-• you want to create a reusable class that cooperates with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
-
-Participants
-• Target
-	o defines the domain-specific interface that Client uses.
-• Client
-	o collaborates with objects conforming to the Target interface.
-• Adaptee
-	o defines an existing interface that needs adapting.
-• Adapter
-	o adapts the interface of Adaptee to the Target interface.
-
-Collaborations
-• Clients call operations on an Adapter instance. In turn, the adapter calls Adaptee operations that carry out the request.
-
-Implementation
-• Object adapter
-	o This implementation uses the object composition principle: the adapter implements the interface of one object and wraps the other one.
-• Class adapter
-	o This implementation uses inheritance: the adapter inherits interfaces from both objects at the same time (this approach can only be implemented in programming languages that support multiple inheritance).
-	  (Adapter would inherit publicly from Target and privately from Adaptee. Thus Adapter would be a subtype of Target but not of Adaptee.)
-
-More on Adapter
-This is a special object that converts the interface of one object so that another object can understand it. The wrapped object isn’t even aware of the adapter.
-Adapters can not only convert data into various formats but can also help objects with different interfaces collaborate. Here’s how it works:
-1. The adapter gets an interface, compatible with one of the existing objects.
-2. Using this interface, the existing object can safely call the adapter’s methods.
-3. Upon receiving a call, the adapter passes the request to the second object, but in a format and order that the second object expects.
-*/
 
 typedef int Length;
 typedef int Width;
@@ -129,3 +93,46 @@ public:
 private:
 	AnotherLine* line_;
 };
+
+#if 0
+------------------------------
+Pattern Name : Builder
+Category : Creational Pattern
+------------------------------
+
+/* Intent */
+Adapter is a structural design pattern that lets classes work together(that couldn't otherwise because of incompatible interfaces).
+
+/* Applicability */
+Use the Adapter pattern when :
+• you want to use an existing class, and its interface does not match the one you need.
+• you want to create a reusable class that cooperates with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
+
+/* Participants */
+• Target
+	o defines the domain - specific interface that Client uses.
+• Client
+	o collaborates with objects conforming to the Target interface.
+• Adaptee
+	o defines an existing interface that needs adapting.
+• Adapter
+	o adapts the interface of Adaptee to the Target interface.
+
+/* Collaborations */
+• Clients call operations on an Adapter instance.In turn, the adapter calls Adaptee operations that carry out the request.
+
+/* Implementation */
+• Object adapter
+	o This implementation uses the object composition principle : the adapter implements the interface of one object and wraps the other one.
+• Class adapter
+	o This implementation uses inheritance : the adapter inherits interfaces from both objects at the same time(this approach can only be implemented in programming languages that support multiple inheritance).
+(Adapter would inherit publicly from Target and privately from Adaptee.Thus Adapter would be a subtype of Target but not of Adaptee.)
+
+/* Note */
+Adapter is a special object that converts the interface of one object so that another object can understand it.The wrapped object isn’t even aware of the adapter.
+Adapters can not only convert data into various formats but can also help objects with different interfaces collaborate.Here’s how it works :
+1. The adapter gets an interface, compatible with one of the existing objects.
+2. Using this interface, the existing object can safely call the adapter’s methods.
+3. Upon receiving a call, the adapter passes the request to the second object, but in a format and order that the second object expects.
+
+#endif
