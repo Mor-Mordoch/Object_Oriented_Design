@@ -100,13 +100,13 @@ Use the Factory Method pattern when
   class ProductFactory
   {
   public:
-  	virtual Product* Make() = 0;
+	virtual Product* Make() = 0;
   }
   
   class BookProductFactory : public ProductFactory
   {
   public:
-  	virtual Product* Make() { return new Book(); }
+	virtual Product* Make() { return new Book(); }
   }
   In this class BookProductFactory always returns Book instances.
   ProductFactory* factory = new BookProductFactory();

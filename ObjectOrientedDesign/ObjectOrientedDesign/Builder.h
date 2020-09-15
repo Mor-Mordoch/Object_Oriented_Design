@@ -1,20 +1,22 @@
 #pragma once
 #include <iostream>
-
+#include <string>
 /* Product class */
 class CNutritionFacts
 {
 public:
+	void SetProductName    (const std::string name) { product_name_ = name; }
 	void SetCalories       (const int calories)     { calories_ = calories; }
 	void SetFat            (const int fat)          { fat_ = fat; }
 	void SetSodium         (const int sodium)       { sodium_ = sodium; }
 	void SetCarbohydrate   (const int carbohydrate) { carbohydrate_ = carbohydrate; }
 	void SetProtein        (const int protein)      { protein_ = protein; }
 	void ShowNutritionFacts() {
-		std::cout << "Calories: " << calories_ << "\nFat: " << fat_ << "\nSodium: " << sodium_ << "\nCarbohydrate: " <<
+		std::cout << "Product: " << product_name_ << "\nCalories: " << calories_ << "\nFat: " << fat_ << "\nSodium: " << sodium_ << "\nCarbohydrate: " <<
 			carbohydrate_ << "\nProtein: " << protein_ << "\n";
 	}
 private:
+	std::string product_name_;
 	int calories_;
 	int fat_;
 	int sodium_;
@@ -26,6 +28,7 @@ private:
 class INutritionFactsBuilder
 {
 public:
+	virtual void             BuildProductName      () {}
 	virtual void             BuildCalories         () {}
 	virtual void             BuildFat              () {}
 	virtual void             BuildSodium           () {}
@@ -42,6 +45,7 @@ protected:
 class MilkNutritionFactsBuilder : public INutritionFactsBuilder
 {
 public:
+	void BuildProductName () { nutrition_facts_->SetProductName("Milk"); }
 	void BuildCalories    () { nutrition_facts_->SetCalories(61); }
 	void BuildFat         () { nutrition_facts_->SetFat(3); }
 	void BuildSodium      () { nutrition_facts_->SetSodium(50); }
@@ -53,6 +57,7 @@ public:
 class HamburgerNutritionFactsBuilder : public INutritionFactsBuilder
 {
 public:
+	void BuildProductName () { nutrition_facts_->SetProductName("Hamburger"); }
 	void BuildCalories    () { nutrition_facts_->SetCalories(285); }
 	void BuildFat         () { nutrition_facts_->SetFat(13); }
 	void BuildSodium      () { nutrition_facts_->SetSodium(500); }
@@ -65,8 +70,9 @@ class NutritionFactsDirector
 {
 public:
 	void             SetNutritionFactsBuilder(INutritionFactsBuilder* nutrition_facts_builder) { nutrition_facts_builder_ = nutrition_facts_builder; }
-	CNutritionFacts* GetNutritionFacts() { return nutrition_facts_builder_->GetNutritionFacts(); }
-	void             BuildFullNutritionFacts() {
+	CNutritionFacts* GetNutritionFacts       () { return nutrition_facts_builder_->GetNutritionFacts(); }
+	void             BuildFullNutritionFacts () {
+		nutrition_facts_builder_->BuildProductName();
 		nutrition_facts_builder_->BuildCalories();
 		nutrition_facts_builder_->BuildProtein();
 		nutrition_facts_builder_->BuildCarbohydrate();
@@ -74,6 +80,7 @@ public:
 		nutrition_facts_builder_->BuildSodium();
 	}
 	void             BuildPartialNutritionFacts() {
+		nutrition_facts_builder_->BuildProductName();
 		nutrition_facts_builder_->BuildCalories();
 		nutrition_facts_builder_->BuildProtein();
 	}
