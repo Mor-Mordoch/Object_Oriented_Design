@@ -1,11 +1,12 @@
 #include "Builder.h"
+#include "Factory_Method.h"
 #include "Adapter.h"
 
 int main()
 {
-	std::cout << "/*---------*/\n";
-	std::cout << "/* Builder */\n";
-	std::cout << "/*---------*/\n";
+	std::cout << "               /*---------*/\n";
+	std::cout << "               /* Builder */\n";
+	std::cout << "               /*---------*/\n";
 	NutritionFactsDirector hamburger_director;
 	hamburger_director.SetNutritionFactsBuilder(new HamburgerNutritionFactsBuilder());
 	hamburger_director.BuildFullNutritionFacts();
@@ -21,9 +22,23 @@ int main()
 	CNutritionFacts* milk = milk_director.GetNutritionFacts();
 	milk->ShowNutritionFacts();
 
-	std::cout << "/*---------*/\n";
-	std::cout << "/* Adapter */\n";
-	std::cout << "/*---------*/\n";
+	std::cout << "               /*----------------*/\n";
+	std::cout << "               /* Factory Method */\n";
+	std::cout << "               /*----------------*/\n";
+	CQuadrilateralShapeFactory *shape_factory = new CQuadrilateralShapeFactory();
+	IQuadrilateralShape* rectangle = shape_factory->createQuadrilateralShape(QuadrilateralShape::Rectangle);
+	rectangle->drawQuadrilateralShape();
+	IQuadrilateralShape* rhombus = shape_factory->createQuadrilateralShape(QuadrilateralShape::Rhombus);
+	rhombus->drawQuadrilateralShape();
+	IQuadrilateralShape* square = shape_factory->createQuadrilateralShape(QuadrilateralShape::Square);
+	square->drawQuadrilateralShape();
+	delete rectangle;
+	delete rhombus;
+	delete square;
+
+	std::cout << "               /*---------*/\n";
+	std::cout << "               /* Adapter */\n";
+	std::cout << "               /*---------*/\n";
 	/* Adapter - Class adapter implementation */
 	Rectangle* r = new RectangleAdapter(5, 10);
 	std::cout << "Rectangle area is : " << r->GetArea() << "\n";
