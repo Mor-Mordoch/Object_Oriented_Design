@@ -18,9 +18,9 @@ protected:
 public:
 	ColoredShapePrototype() {}
 	ColoredShapePrototype(std::string color) : color_(color) {}
-	virtual std::unique_ptr<ColoredShapePrototype> Clone() const = 0;
-	virtual void                   ShapeDetails ()          { std::cout<<"Shape: "<<shape_<<"\nColor: " << color_ << "\n"; }
-	virtual void                   UpdateColor  (std::string color) { color_ = color; }
+	virtual std::unique_ptr<ColoredShapePrototype> Clone        () const = 0;
+	virtual void                                   ShapeDetails ()                  { std::cout<<"Shape: "<<shape_<<"\nColor: " << color_ << "\n"; }
+	virtual void                                   UpdateColor  (std::string color) { color_ = color; }
 	virtual ~ColoredShapePrototype() {}
 
 };
@@ -86,11 +86,27 @@ Use the Prototype pattern when a system should be independent of how its product
 
 
 /* Notes */
-1. Each subclass of Prototype must implement the Clone operation, which may be difficult (classes that do not support copying or have circular references).
+1. Each subclass of Prototype must implement the Clone operation, which may be difficult (for classes that do not support copying or have circular references).
    Most languages provide some support for cloning objects. C++ provides a copy constructor, But these facilities don't solve the "shallow copy versus deep copy" problem.
    The default copy constructor in C++ does a member-wise copy, which means pointers will be shared between the copy and the original.
-   But cloning prototypes with complex structures usually requires a deep copy, because the clone and the original must be independent.
+   Cloning prototypes with complex structures usually requires a deep copy, because the clone and the original must be independent.
    Therefore you must ensure that the clone's components are clones of the prototype's components. Cloning forces you to decide what if anything will be shared.
-//usage of smart pointers
-// override
+2. unique_ptr - Manages the storage of a pointer, providing a limited garbage-collection facility, with little to no overhead over built-in pointers.
+   unique_ptr objects own their pointer uniquely : no other facility shall take care of deleting the object, and thus no other managed pointer should point to its managed object.
+   Without "smart pointers", Clone method returns a Pointer to a new ConcretePrototype replica. so, the client(who call the clone method) has the responsability to free that memory.
+3. Override keyword - make the compiler to check the base class to see if there is a virtual function with this exact signature, and if there is not, compiler will show an error.
+4. Prototype vs.Copy Constructor - The downside of Copy Constructor is that it works only for Concrete Classes. If, for good design decisions,
+   you offer only the object API(Interface / Pure virtual) to users, then you cannot use a copy constructor on client side,
+   so if the intended usage is cloning an item, you can resolve that by adding a Clone method.
+5. In this example all data members of Prototype Class are in the Stack. If you have pointers in your properties, you will need to implement the Copy-Constructor to make sure
+   you have a deep copy from the clone method.
+   * With smart pointers : Since unique_ptr can not be shared, you need to either deep-copy its content or convert the unique_ptr to a shared_ptr.
+   class A
+   {
+	 std::unique_ptr< int > up_;
+   public:
+	 A(int i) : up_(new int(i)) {}
+	 A(const A& a) : up_(new int(*a.up_)) {}
+   };
+
 #endif
