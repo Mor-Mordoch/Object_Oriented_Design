@@ -1,6 +1,7 @@
 #include "Builder.h"
 #include "Factory_Method.h"
 #include "Adapter.h"
+#include "Prototype.h"
 
 int main()
 {
@@ -49,5 +50,15 @@ int main()
 	std::cout << "Square area is : " << s->GetArea() << "\n";
 	s->Draw();
 
+	std::cout << "               /*-----------*/\n";
+	std::cout << "               /* Prototype */\n";
+	std::cout << "               /*-----------*/\n";
+	ShapesPrototypeFactory prototype_factory;
+	auto circ = prototype_factory.CreatePrototype(Shape::Circle);
+	circ->ShapeDetails();
+	auto rect = prototype_factory.CreatePrototype(Shape::Rectangle);
+	rect->ShapeDetails();
+	rect->UpdateColor("Red");
+	rect->ShapeDetails();
 	return 0;
 }
