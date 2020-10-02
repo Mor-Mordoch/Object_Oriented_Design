@@ -2,6 +2,7 @@
 #include "Factory_Method.h"
 #include "Adapter.h"
 #include "Prototype.h"
+#include "Bridge.h"
 
 int main()
 {
@@ -60,5 +61,27 @@ int main()
 	rect->ShapeDetails();
 	rect->UpdateColor("Red");
 	rect->ShapeDetails();
+
+	std::cout << "               /*--------*/\n";
+	std::cout << "               /* Bridge */\n";
+	std::cout << "               /*--------*/\n";
+	Device *tv = new TV();
+	tv->PrintStatus();
+	BasicRemote* br = new BasicRemote(tv);
+	br->Power();
+	br->VolumeUp();
+	tv->PrintStatus();
+
+	Device* radio = new Radio();
+	radio->PrintStatus();
+	AdvancedRemote* ar = new AdvancedRemote(radio);
+	ar->Power();
+	ar->VolumeUp();
+	ar->VolumeUp();
+	ar->VolumeUp();
+	radio->PrintStatus();
+	ar->Mute();
+	radio->PrintStatus();
+
 	return 0;
 }
